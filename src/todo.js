@@ -1,4 +1,5 @@
-export class TodoItem {
+export default class TodoItem {
+  isComplete = false;
   constructor(title, description, dueDate, priority, notes, isComplete) {
     this.title = title;
     this.description = description;
@@ -6,5 +7,9 @@ export class TodoItem {
     this.priority = priority;
     this.notes = notes;
     this.isComplete = isComplete;
+  }
+
+  toggleComplete() {
+    this.isComplete = !this.isComplete;
   }
 }

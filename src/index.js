@@ -1,6 +1,4 @@
-import { TodoItem } from "./todo";
-import { Project } from "./project";
+//import { init } from "./startup";
+import { init } from "./display";
 
-function createTodo() {
-  //to be implemented
-}
+init();

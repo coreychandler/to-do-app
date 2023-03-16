@@ -15,21 +15,31 @@ body {
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
   grid-row: 1 / 2;
   grid-column: 1 / -1;
   background-color: rgb(21, 25, 67);
   color: white;
-  font-size: 32px;
+  font-size: 18px;
+  gap: 5px;
 }
 .main {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
+  background-color: rgb(218, 221, 224);
 }
 
 .left {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
-  background-color: lightslategray;
+  background-color: rgb(199, 202, 205);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 30px;
 }
 .footer {
   grid-row: 3 / 4;
@@ -41,16 +51,92 @@ body {
   color: white;
 }
 
-button {
+button.project-btn {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 32px;
+}
+
+.todo-item {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.btn {
   display: inline-block;
   outline: 0;
   border: 0;
   cursor: pointer;
-  background-color: #f8961f;
+  background-color: #b6f844;
   border-radius: 4px;
   padding: 8px 16px;
   font-size: 16px;
   font-weight: 700;
   color: #2d3287;
   line-height: 26px;
+}
+
+.btn .cancel {
+  background-color: rgb(214, 120, 86);
+}
+
+input {
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  outline: none;
+  box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+}
+input:focus {
+  border-color: #0366d6;
+  outline: none;
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+}
+
+.project-btn-container {
+  display: flex;
+  gap: 8px;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.overlay {
+  position: fixed;
+  font-family: inherit;
+  width: 350px; /* Full width (cover the whole page) */
+  max-width: 100%;
+  padding: 15px;
+  top: 50%;
+  left: 50%;
+  background-color: rgb(161, 161, 161);
+  border-radius: 15px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.hidden {
+  display: none;
 }
