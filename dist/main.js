@@ -11,8 +11,12 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createProject": () => (/* binding */ createProject),
+/* harmony export */   "createTodo": () => (/* binding */ createTodo),
+/* harmony export */   "deleteTodo": () => (/* binding */ deleteTodo),
 /* harmony export */   "getProjectList": () => (/* binding */ getProjectList),
+/* harmony export */   "getSelectedProject": () => (/* binding */ getSelectedProject),
 /* harmony export */   "getToDoList": () => (/* binding */ getToDoList),
+/* harmony export */   "setSelectedProject": () => (/* binding */ setSelectedProject),
 /* harmony export */   "setupTestData": () => (/* binding */ setupTestData)
 /* harmony export */ });
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
@@ -21,6 +25,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const projectList = [];
+let selectedProject = null;
+
+function setSelectedProject(project) {
+  selectedProject = project;
+}
+
+function getSelectedProject() {
+  return selectedProject;
+}
 
 function setupTestData() {
   const homeProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"]("Home");
@@ -49,6 +62,15 @@ function getToDoList(project) {
 function createProject(name) {
   const newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](name);
   projectList.push(newProject);
+  console.log(projectList);
+}
+
+function createTodo(name, date, priority) {
+  //idk yet
+}
+
+function deleteTodo(todo) {
+  //idk yet
 }
 
 
@@ -63,6 +85,7 @@ function createProject(name) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addProjectEvents": () => (/* binding */ addProjectEvents),
+/* harmony export */   "addTodoEvents": () => (/* binding */ addTodoEvents),
 /* harmony export */   "init": () => (/* binding */ init),
 /* harmony export */   "renderProjects": () => (/* binding */ renderProjects)
 /* harmony export */ });
@@ -87,11 +110,16 @@ function renderProjects() {
     projectElem.textContent = project.name;
     projectListElem.appendChild(projectElem);
     projectElem.addEventListener("click", () => {
-      resetMainDisplay();
-      project.getList().forEach((todo) => {
-        createTodoDisplay(todo);
-      });
+      displayProject(project);
     });
+  });
+}
+
+function displayProject(project) {
+  (0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.setSelectedProject)(project);
+  resetMainDisplay();
+  project.getList().forEach((todo) => {
+    createTodoDisplay(todo);
   });
 }
 
@@ -112,32 +140,54 @@ function addProjectEvents() {
   });
 }
 
+function addTodoEvents() {
+  const todoOverlay = document.querySelector(".todo-overlay");
+  const addTodoBtn = document.querySelector(".addtodo");
+  addTodoBtn.addEventListener("click", () => {
+    toggleHidden(todoOverlay);
+  });
+}
+
 function toggleHidden(element) {
+  console.log(element);
   element.classList.toggle("hidden");
 }
 
 function createTodoDisplay(task) {
   const main = document.querySelector(".main");
+  //create the task components
   const todoItem = document.createElement("div");
   const todoTitle = document.createElement("p");
   todoTitle.textContent = task.title;
   const todoDate = document.createElement("p");
   todoDate.textContent = task.dueDate;
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "Delete";
+  deleteButton.classList.add("btn");
+  //set the class and append
   todoItem.classList.add("todo-item");
   todoItem.appendChild(todoTitle);
   todoItem.appendChild(todoDate);
-  main.appendChild(todoItem);
+  todoItem.appendChild(deleteButton);
+  const addTodoButton = main.querySelector(".addtodo");
+  main.insertBefore(todoItem, addTodoButton);
 }
 
 function resetMainDisplay() {
-  const main = document.querySelector(".main");
-  main.textContent = "";
+  //const main = document.querySelector(".main");
+  const elements = document.querySelectorAll(".todo-item");
+  elements.forEach((element) => {
+    element.remove();
+  });
 }
 
 function resetProjectDisplay() {
   const projectListElem = document.querySelector(".project-list");
   projectListElem.textContent = "";
 }
+
+//next: add button to add more tasks and
+//then add close/edit functionality on the tasks
 
 
 /***/ }),

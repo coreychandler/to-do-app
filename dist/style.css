@@ -29,6 +29,9 @@ body {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   background-color: rgb(218, 221, 224);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .left {
@@ -60,6 +63,10 @@ button.project-btn {
   cursor: pointer;
   outline: inherit;
   font-size: 32px;
+}
+
+.addtodo {
+  margin-top: 20px;
 }
 
 .todo-item {
