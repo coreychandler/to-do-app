@@ -4,14 +4,22 @@ import {
   setupTestData,
   getSelectedProject,
   setSelectedProject,
+  createTodo,
+  projectList,
 } from "./datacontroller";
 
 //load the projects, may be expanded to use localstorage and then real storage later
 
 export function init() {
   setupTestData();
+  console.log(getSelectedProject());
+  if (!getSelectedProject()) {
+    displayProject(projectList[0]);
+    setSelectedProject(projectList[0]);
+  }
   renderProjects();
   addProjectEvents();
+  addTodoEvents();
 }
 
 export function renderProjects() {
@@ -43,6 +51,7 @@ export function addProjectEvents() {
   const addProjectBtn = document.querySelector(".addproject");
   const projInput = document.querySelector(".proj-name");
   const submitProject = document.querySelector(".confirm.proj-btn");
+  //add cancel one too
   addProjectBtn.addEventListener("click", () => {
     toggleHidden(projOverlay);
   });
@@ -57,13 +66,21 @@ export function addProjectEvents() {
 export function addTodoEvents() {
   const todoOverlay = document.querySelector(".todo-overlay");
   const addTodoBtn = document.querySelector(".addtodo");
+  const nameInput = document.querySelector(".add-todo-name");
+  const dateInput = document.querySelector(".add-todo-date");
   addTodoBtn.addEventListener("click", () => {
     toggleHidden(todoOverlay);
+  });
+  const submitTodo = document.querySelector(".confirm.todo-btn");
+  submitTodo.addEventListener("click", () => {
+    toggleHidden(todoOverlay);
+    createTodo(nameInput.value, dateInput.value, "");
+    resetMainDisplay();
+    displayProject(getSelectedProject());
   });
 }
 
 function toggleHidden(element) {
-  console.log(element);
   element.classList.toggle("hidden");
 }
 
@@ -99,6 +116,8 @@ function resetProjectDisplay() {
   const projectListElem = document.querySelector(".project-list");
   projectListElem.textContent = "";
 }
+
+function handleTodoDelete(task) {}
 
 //next: add button to add more tasks and
 //then add close/edit functionality on the tasks

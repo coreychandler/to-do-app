@@ -16,6 +16,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getProjectList": () => (/* binding */ getProjectList),
 /* harmony export */   "getSelectedProject": () => (/* binding */ getSelectedProject),
 /* harmony export */   "getToDoList": () => (/* binding */ getToDoList),
+/* harmony export */   "projectList": () => (/* binding */ projectList),
 /* harmony export */   "setSelectedProject": () => (/* binding */ setSelectedProject),
 /* harmony export */   "setupTestData": () => (/* binding */ setupTestData)
 /* harmony export */ });
@@ -32,7 +33,7 @@ function setSelectedProject(project) {
 }
 
 function getSelectedProject() {
-  return selectedProject;
+  return selectedProject === null ? null : selectedProject;
 }
 
 function setupTestData() {
@@ -62,15 +63,23 @@ function getToDoList(project) {
 function createProject(name) {
   const newProject = new _project__WEBPACK_IMPORTED_MODULE_0__["default"](name);
   projectList.push(newProject);
-  console.log(projectList);
+  //console.log(projectList);
 }
 
-function createTodo(name, date, priority) {
-  //idk yet
+function createTodo(title, date, priority) {
+  const newTodo = new _todo__WEBPACK_IMPORTED_MODULE_1__["default"](
+    title,
+    "testdescription",
+    date,
+    priority,
+    "",
+    false
+  );
+  getSelectedProject().addToList(newTodo);
 }
 
 function deleteTodo(todo) {
-  //idk yet
+  getSelectedProject().removeFromList(todo);
 }
 
 
@@ -96,8 +105,14 @@ __webpack_require__.r(__webpack_exports__);
 
 function init() {
   (0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.setupTestData)();
+  console.log((0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.getSelectedProject)());
+  if (!(0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.getSelectedProject)()) {
+    displayProject(_datacontroller__WEBPACK_IMPORTED_MODULE_0__.projectList[0]);
+    (0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.setSelectedProject)(_datacontroller__WEBPACK_IMPORTED_MODULE_0__.projectList[0]);
+  }
   renderProjects();
   addProjectEvents();
+  addTodoEvents();
 }
 
 function renderProjects() {
@@ -129,6 +144,7 @@ function addProjectEvents() {
   const addProjectBtn = document.querySelector(".addproject");
   const projInput = document.querySelector(".proj-name");
   const submitProject = document.querySelector(".confirm.proj-btn");
+  //add cancel one too
   addProjectBtn.addEventListener("click", () => {
     toggleHidden(projOverlay);
   });
@@ -143,13 +159,21 @@ function addProjectEvents() {
 function addTodoEvents() {
   const todoOverlay = document.querySelector(".todo-overlay");
   const addTodoBtn = document.querySelector(".addtodo");
+  const nameInput = document.querySelector(".add-todo-name");
+  const dateInput = document.querySelector(".add-todo-date");
   addTodoBtn.addEventListener("click", () => {
     toggleHidden(todoOverlay);
+  });
+  const submitTodo = document.querySelector(".confirm.todo-btn");
+  submitTodo.addEventListener("click", () => {
+    toggleHidden(todoOverlay);
+    (0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.createTodo)(nameInput.value, dateInput.value, "");
+    resetMainDisplay();
+    displayProject((0,_datacontroller__WEBPACK_IMPORTED_MODULE_0__.getSelectedProject)());
   });
 }
 
 function toggleHidden(element) {
-  console.log(element);
   element.classList.toggle("hidden");
 }
 
@@ -185,6 +209,8 @@ function resetProjectDisplay() {
   const projectListElem = document.querySelector(".project-list");
   projectListElem.textContent = "";
 }
+
+function handleTodoDelete(task) {}
 
 //next: add button to add more tasks and
 //then add close/edit functionality on the tasks

@@ -1,7 +1,7 @@
 import Project from "./project";
 import TodoItem from "./todo";
 
-const projectList = [];
+export const projectList = [];
 let selectedProject = null;
 
 export function setSelectedProject(project) {
@@ -9,7 +9,7 @@ export function setSelectedProject(project) {
 }
 
 export function getSelectedProject() {
-  return selectedProject;
+  return selectedProject === null ? null : selectedProject;
 }
 
 export function setupTestData() {
@@ -39,13 +39,21 @@ export function getToDoList(project) {
 export function createProject(name) {
   const newProject = new Project(name);
   projectList.push(newProject);
-  console.log(projectList);
+  //console.log(projectList);
 }
 
-export function createTodo(name, date, priority) {
-  //idk yet
+export function createTodo(title, date, priority) {
+  const newTodo = new TodoItem(
+    title,
+    "testdescription",
+    date,
+    priority,
+    "",
+    false
+  );
+  getSelectedProject().addToList(newTodo);
 }
 
 export function deleteTodo(todo) {
-  //idk yet
+  getSelectedProject().removeFromList(todo);
 }
