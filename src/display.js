@@ -12,7 +12,6 @@ import {
 
 export function init() {
   setupTestData();
-  console.log(getSelectedProject());
   if (!getSelectedProject()) {
     displayProject(projectList[0]);
     setSelectedProject(projectList[0]);
