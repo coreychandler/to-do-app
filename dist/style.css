@@ -73,6 +73,7 @@ button.project-btn {
   display: flex;
   gap: 30px;
   justify-content: center;
+  align-items: center;
   font-size: 28px;
 }
 
